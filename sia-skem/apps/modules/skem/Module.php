@@ -1,6 +1,6 @@
 <?php
 
-namespace Idy\Idea;
+namespace Idy\Skem;
 
 use Phalcon\DiInterface;
 use Phalcon\Loader;
@@ -13,12 +13,12 @@ class Module implements ModuleDefinitionInterface
         $loader = new Loader();
 
         $loader->registerNamespaces([
-            'Idy\Idea\Domain\Model' => __DIR__ . '/domain/model',
-            'Idy\Idea\Infrastructure' => __DIR__ . '/infrastructure',
-            'Idy\Idea\Application' => __DIR__ . '/application',
-            'Idy\Idea\Controllers\Web' => __DIR__ . '/controllers/web',
-            'Idy\Idea\Controllers\Api' => __DIR__ . '/controllers/api',
-            'Idy\Idea\Controllers\Validators' => __DIR__ . '/controllers/validators',
+            'Idy\Skem\Domain\Model' => __DIR__ . '/domain/model',
+            'Idy\Skem\Infrastructure' => __DIR__ . '/infrastructure',
+            'Idy\Skem\Application' => __DIR__ . '/application',
+            'Idy\Skem\Controllers\Web' => __DIR__ . '/controllers/web',
+            'Idy\Skem\Controllers\Api' => __DIR__ . '/controllers/api',
+            'Idy\Skem\Controllers\Validators' => __DIR__ . '/controllers/validators',
         ]);
 
         $loader->register();
@@ -31,8 +31,6 @@ class Module implements ModuleDefinitionInterface
         $di->get('config')->merge($moduleConfig);
 
         include_once __DIR__ . '/config/services.php';
-
-        $di->get('event_publisher');
     }
 
 }
