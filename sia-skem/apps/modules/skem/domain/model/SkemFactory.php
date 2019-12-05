@@ -6,7 +6,7 @@ use Tuupola\KsuidFactory;
 
 class SkemFactory
 {
-    public static function create($id = null, $namaKegiatan, $jenisKegiatan, $lingkup, $poin) : Skem
+    public static function create($id, $namaKegiatan, $jenisKegiatan, $lingkup, $poin) : Skem
     {
         $ksuid = KsuidFactory::create();
         $newId = $id?:$ksuid->string();

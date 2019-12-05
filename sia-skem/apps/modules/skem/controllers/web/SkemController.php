@@ -10,20 +10,5 @@ class SkemController extends Controller
     {
         $this->view->pick('skem');
     }
-
-    public function addAction()
-    {
-
-    }
-
-    public function voteAction()
-    {
-
-    }
-
-    public function rateAction()
-    {
-        
-    }
-
+    
 }
