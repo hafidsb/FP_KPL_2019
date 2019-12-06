@@ -1,6 +1,6 @@
 <?php
 
-namespace Idy\Skem\Domain\Model;
+namespace SiaSkem\Skem\Domain\Model;
 
 class Skem
 {

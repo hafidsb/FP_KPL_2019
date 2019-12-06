@@ -1,8 +1,9 @@
 <?php
 
-namespace Idy\Skem\Domain\Model;
+namespace SiaSkem\Skem\Domain\Model;
 
 interface SkemRepository{
+    public function all() : array;
     public function byId(string $id) : ?Skem;
     public function save(Skem $skem);
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Idy\Skem\Controllers\Web;
+namespace SiaSkem\Skem\Controllers\Web;
 
 use Phalcon\Mvc\Controller;
 

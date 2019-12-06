@@ -1,6 +1,6 @@
 <?php
 
-namespace Idy\Skem\Application;
+namespace SiaSkem\Skem\Application;
 
 class MengubahPoinSkemRequest{
     public $poinBaru;

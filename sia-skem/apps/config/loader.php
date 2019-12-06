@@ -16,7 +16,7 @@ $loader->registerNamespaces(array(
 	/**
 	 * Load common classes
 	 */
-	'Idy\Common\Events' => APP_PATH . '/common/events',
+	'SiaSkem\Common\Events' => APP_PATH . '/common/events',
 ));
 
 $loader->register();

@@ -1,5 +1,5 @@
 <?php
 
-namespace Idy\Skem\Infrastructure;
+namespace SiaSkem\Skem\Infrastructure;
 
 class DatabaseExecutionFailedException extends \Exception{}

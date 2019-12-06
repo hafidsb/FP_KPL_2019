@@ -1,8 +1,8 @@
 <?php
 
-namespace Idy\Skem\Application;
+namespace SiaSkem\Skem\Application;
 
-use Idy\Skem\Domain\Model\SkemRepository;
+use SiaSkem\Skem\Domain\Model\SkemRepository;
 
 class MengubahPoinSkemService{
     private $skemRepository;

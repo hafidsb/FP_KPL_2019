@@ -1,6 +1,6 @@
 <?php
 
-namespace Idy\Skem;
+namespace SiaSkem\Skem;
 
 use Phalcon\DiInterface;
 use Phalcon\Loader;
@@ -13,12 +13,12 @@ class Module implements ModuleDefinitionInterface
         $loader = new Loader();
 
         $loader->registerNamespaces([
-            'Idy\Skem\Domain\Model' => __DIR__ . '/domain/model',
-            'Idy\Skem\Infrastructure' => __DIR__ . '/infrastructure',
-            'Idy\Skem\Application' => __DIR__ . '/application',
-            'Idy\Skem\Controllers\Web' => __DIR__ . '/controllers/web',
-            'Idy\Skem\Controllers\Api' => __DIR__ . '/controllers/api',
-            'Idy\Skem\Controllers\Validators' => __DIR__ . '/controllers/validators',
+            'SiaSkem\Skem\Domain\Model' => __DIR__ . '/domain/model',
+            'SiaSkem\Skem\Infrastructure' => __DIR__ . '/infrastructure',
+            'SiaSkem\Skem\Application' => __DIR__ . '/application',
+            'SiaSkem\Skem\Controllers\Web' => __DIR__ . '/controllers/web',
+            'SiaSkem\Skem\Controllers\Api' => __DIR__ . '/controllers/api',
+            'SiaSkem\Skem\Controllers\Validators' => __DIR__ . '/controllers/validators',
         ]);
 
         $loader->register();

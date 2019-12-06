@@ -1,10 +1,10 @@
 <?php
 
-namespace Idy\Skem\Infrastructure;
+namespace SiaSkem\Skem\Infrastructure;
 
-use Idy\Skem\Domain\Model\Skem;
-use Idy\Skem\Domain\Model\SkemFactory;
-use Idy\Skem\Domain\Model\SkemRepository;
+use SiaSkem\Skem\Domain\Model\Skem;
+use SiaSkem\Skem\Domain\Model\SkemFactory;
+use SiaSkem\Skem\Domain\Model\SkemRepository;
 use Phalcon\Db\Column;
 
 class MySqlSkemRepository implements SkemRepository{
@@ -18,10 +18,31 @@ class MySqlSkemRepository implements SkemRepository{
         $this->skemTableName = "skems";
     }
 
+    public function all()
+    {
+        $query = 
+            "SELECT id, nama_kegiatan, jenis_kegiatan, lingkup, poin 
+            FROM {$this->skemTableName}";
+        $result = $this->db->query($query);
+        $rows = $result->fetchAll();
+        $skems = array();
+        foreach ($rows as $row){
+            $skem = SkemFactory::create(
+                $row["id"], 
+                $row["nama_kegiatan"],
+                $row["jenis_kegiatan"], 
+                $row["lingkup"],
+                $row["poin"]
+            );
+            array_push($skems, $skem);
+        }
+        return $skems;
+    }
+
     public function byId(string $id) : ?Skem
     {
          $query = $this->db->prepare(
-            "SELECT :namaKegiatan, :jenisKegiatan, :lingkup, :poin
+            "SELECT nama_kegiatan, jenis_kegiatan, lingkup, poin
             FROM {$this->skemTableName}
             WHERE id = :id"
         );
