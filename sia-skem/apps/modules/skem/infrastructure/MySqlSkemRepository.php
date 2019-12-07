@@ -18,7 +18,7 @@ class MySqlSkemRepository implements SkemRepository{
         $this->skemTableName = "skems";
     }
 
-    public function all()
+    public function all() : array
     {
         $query = 
             "SELECT id, nama_kegiatan, jenis_kegiatan, lingkup, poin 
