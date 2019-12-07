@@ -12,7 +12,7 @@ class MelihatSemuaSkemResponse{
 
     public function addSkem($id, $namaKegiatan, $jenisKegiatan, $lingkup, $poin)
     {
-        $skem = array();
+        $skem = (object) array();
         $skem->id = $id;
         $skem->namaKegiatan = $namaKegiatan;
         $skem->jenisKegiatan = $jenisKegiatan;
