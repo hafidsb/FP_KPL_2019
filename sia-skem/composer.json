@@ -5,6 +5,7 @@
         "tuupola/ksuid": "^2.0"
     },
     "require-dev": {
-        "phalcon/ide-stubs": "^3.4"
+        "phalcon/ide-stubs": "^3.4",
+        "phpunit/phpunit": "8"
     }
 }

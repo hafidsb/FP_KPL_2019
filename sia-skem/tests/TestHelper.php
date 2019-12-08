@@ -20,9 +20,9 @@ $loader = new Loader();
 
 $loader->registerNamespaces([
 
-    // 'SiaSkem\Idea\Domain\Model' => APP_PATH . '/modules/idea/domain/model',
-    // 'SiaSkem\Idea\Application' => APP_PATH . '/modules/idea/application',
-    // 'SiaSkem\Idea\Infrastructure' => APP_PATH . '/modules/idea/infrastructure',
+    'SiaSkem\Skem\Domain\Model' => APP_PATH . '/modules/skem/domain/model',
+    'SiaSkem\Skem\Application' => APP_PATH . '/modules/skem/application',
+    'SiaSkem\Skem\Infrastructure' => APP_PATH . '/modules/skem/infrastructure',
 
 ]);
 
