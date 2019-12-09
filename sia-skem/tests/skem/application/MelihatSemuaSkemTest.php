@@ -94,6 +94,7 @@ class MelihatSemuaSkemTest extends TestCase
         $expectedSkems = $expectedResponses->skems;
         $skemResponses = $this->melihatSemuaSkemService->execute();
         $skems = $skemResponses->skems;
+        $this->assertIsArray($skems);
         $this->assertTrue($this->hasSameSkemsValue($expectedSkems, $skems));
     }
 }
