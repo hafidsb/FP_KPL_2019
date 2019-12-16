@@ -59,7 +59,7 @@ class MelihatSemuaSkemTest extends TestCase
         $responses = new MelihatSemuaSkemResponse();
         foreach ($skems as $skem){
             $responses->addSkem(
-                $skem->id(),
+                $skem->id()->id(),
                 $skem->kegiatan()->nama(),
                 $skem->kegiatan()->jenis(),
                 $skem->lingkup(),

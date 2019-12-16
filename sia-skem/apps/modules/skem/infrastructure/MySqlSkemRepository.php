@@ -3,6 +3,7 @@
 namespace SiaSkem\Skem\Infrastructure;
 
 use SiaSkem\Skem\Domain\Model\Skem;
+use SiaSkem\Skem\Domain\Model\SkemId;
 use SiaSkem\Skem\Domain\Model\SkemFactory;
 use SiaSkem\Skem\Domain\Model\SkemRepository;
 use Phalcon\Db\Column;
@@ -71,7 +72,7 @@ class MySqlSkemRepository implements SkemRepository{
     {
         $isExist = $this->exist($skem);
         $placeholders = [
-            "id" => $skem->id(),
+            "id" => $skem->id()->id(),
             "namaKegiatan" => $skem->kegiatan()->nama(),
             "jenisKegiatan" => $skem->kegiatan()->jenis(),
             "lingkup" => $skem->lingkup(),
@@ -108,7 +109,7 @@ class MySqlSkemRepository implements SkemRepository{
             "SELECT 1 FROM {$this->skemTableName} WHERE id = :id"
         );
         $placeholders = [
-            "id" => $skem->id()
+            "id" => $skem->id()->id()
         ];
         $dataTypes = [
             "id" => Column::BIND_PARAM_STR
