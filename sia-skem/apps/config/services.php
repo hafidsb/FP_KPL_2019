@@ -8,6 +8,7 @@ use Phalcon\Mvc\Dispatcher;
 use Phalcon\Mvc\View;
 use Phalcon\Flash\Direct as FlashDirect;
 use Phalcon\Flash\Session as FlashSession;
+use SiaSkem\Skem\Infrastructure\MySqlRealisasiSkemRepository;
 use SiaSkem\Skem\Infrastructure\MySqlSkemRepository;
 
 $di['config'] = function() use ($config) {
@@ -114,6 +115,12 @@ $di->set(
 
 $di->setShared('mysql_skem_repository', function () use ($di){
     $instance = new MySqlSkemRepository($di);
+
+    return $instance;
+});
+
+$di->setShared('mysql_realisasi_skem_repository', function () use ($di){
+    $instance = new MySqlRealisasiSkemRepository($di);
 
     return $instance;
 });

@@ -20,3 +20,24 @@ $router->add('/skem/poin', array(
     'controller' => 'skem',
     'action' => 'updatePoin',
 ));
+
+$router->add('/skem/guide', array(
+    'namespace' => 'SiaSkem\Skem\Controllers\Web',
+    'module' => 'skem',
+    'controller' => 'skem',
+    'action' => 'showGuide',
+));
+
+$router->addGet('/realisasi_skem', array(
+    'namespace' => 'SiaSkem\Skem\Controllers\Web',
+    'module' => 'skem',
+    'controller' => 'realisasiSkem',
+    'action' => 'index',
+));
+
+$router->add('/realisasi_skem/create', array(
+    'namespace' => 'SiaSkem\Skem\Controllers\Web',
+    'module' => 'skem',
+    'controller' => 'realisasiSkem',
+    'action' => 'create',
+));
