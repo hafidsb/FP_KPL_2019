@@ -2,19 +2,23 @@
 
 namespace SiaSkem\Skem\Domain\Model;
 
-class RencanaSkem
+class RealisasiSkem
 {
     private $id;
     private $skemId;
     private $deskripsi;
     private $semester;
+    private $tervalidasi;
+    private $tanggal;
 
-    public function __construct(RencanaSkemId $id, SkemId $skemId, $deskripsi, $semester)
+    public function __construct($id, SkemId $skemId, $deskripsi, $semester, $tervalidasi, $tanggal)
     {
         $this->id = $id;
         $this->skemId = $skemId;
         $this->deskripsi = $deskripsi;
         $this->semester = $semester;
+        $this->tervalidasi = $tervalidasi;
+        $this->tanggal = $tanggal;
     }
 
     public function id()
@@ -37,14 +41,20 @@ class RencanaSkem
         return $this->semester;
     }
 
-    public function addRencanaSkem($skem, $deskripsi, $semester)
+    public function tervalidasi()
     {
-        $rencanaSkemId = new RencanaSkemId();
-        $rencanaSkem = new RencanaSkem($rencanaSkemId, $skem, $deskripsi, $semester);
-        return $rencanaSkem;
+        return $this->tervalidasi;
     }
 
-    
+    public function tanggal()
+    {
+        return $this->tanggal;
+    }
+
+    public function validasiSkem()
+    {
+        $this->tervalidasi = true;
+    }
 
 
 }

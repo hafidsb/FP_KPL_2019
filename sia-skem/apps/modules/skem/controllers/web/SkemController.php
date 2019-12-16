@@ -71,4 +71,9 @@ class SkemController extends Controller
         }
         $this->view->pick('skem/create');
     }
+
+    public function showGuideAction()
+    {
+        $this->view->pick('skem/guide');   
+    }
 }
