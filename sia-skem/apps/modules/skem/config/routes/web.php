@@ -20,3 +20,10 @@ $router->add('/skem/poin', array(
     'controller' => 'skem',
     'action' => 'updatePoin',
 ));
+
+$router->add('/skem/guide', array(
+    'namespace' => 'SiaSkem\Skem\Controllers\Web',
+    'module' => 'skem',
+    'controller' => 'skem',
+    'action' => 'showGuide',
+));
