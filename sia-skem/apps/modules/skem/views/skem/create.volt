@@ -1,4 +1,4 @@
-{% extends '../navbar.volt' %}
+{% extends 'navbar.volt' %}
 
 {% block content %}
 <div class="container mt-5 p-3 border rounded bg-white" style="margin-top: 100px !important">

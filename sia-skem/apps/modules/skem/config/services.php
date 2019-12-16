@@ -1,6 +1,8 @@
 <?php
 
 use Phalcon\Mvc\View;
+use Phalcon\Flash\Direct as FlashDirect;
+use Phalcon\Flash\Session as FlashSession;
 
 $di['voltServiceMail'] = function($view) use ($di) {
 
@@ -33,6 +35,41 @@ $di['view'] = function () {
 
     return $view;
 };
+
+$di->set(
+    'flash',
+    function () {
+        $flash = new FlashDirect(
+            [
+                'error'   => 'alert alert-danger',
+                'success' => 'alert alert-success',
+                'notice'  => 'alert alert-info',
+                'warning' => 'alert alert-warning',
+            ]
+        );
+
+        return $flash;
+    }
+);
+
+$di->set(
+    'flashSession',
+    function () {
+        $flash = new FlashSession(
+            [
+                'error'   => 'alert alert-danger',
+                'success' => 'alert alert-success',
+                'notice'  => 'alert alert-info',
+                'warning' => 'alert alert-warning',
+            ]
+        );
+
+        $flash->setAutoescape(false);
+        
+        return $flash;
+    }
+);
+
 
 $di['db'] = function () use ($di) {
 

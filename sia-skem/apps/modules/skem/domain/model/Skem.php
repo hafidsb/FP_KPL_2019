@@ -10,7 +10,7 @@ class Skem
     private $lingkup;
     private $poin;
 
-    public function __construct($id,Kegiatan $kegiatan, $lingkup, $poin)
+    public function __construct(SkemId $id,Kegiatan $kegiatan, $lingkup, $poin)
     {
         $this->id = $id;
         $this->kegiatan = $kegiatan;
@@ -43,4 +43,5 @@ class Skem
     {
         $this->poin = $poinBaru;
     }
+    
 }

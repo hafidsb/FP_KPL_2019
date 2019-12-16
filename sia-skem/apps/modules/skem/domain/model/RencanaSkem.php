@@ -5,19 +5,15 @@ namespace SiaSkem\Skem\Domain\Model;
 class RencanaSkem
 {
     private $id;
-    private $kegiatan;
-    private $lingkup;
+    private $skemId;
     private $deskripsi;
-    private $poin;
     private $semester;
 
-    public function __construct($id, Kegiatan $kegiatan, $lingkup, $deskripsi, $poin, $semester)
+    public function __construct(RencanaSkemId $id, SkemId $skemId, $deskripsi, $semester)
     {
         $this->id = $id;
-        $this->kegiatan = $kegiatan;
-        $this->lingkup = $lingkup;
+        $this->skemId = $skemId;
         $this->deskripsi = $deskripsi;
-        $this->poin = $poin;
         $this->semester = $semester;
     }
 
@@ -26,14 +22,9 @@ class RencanaSkem
         return $this->id;
     }
 
-    public function kegiatan()
+    public function skemId()
     {
-        return $this->kegiatan;
-    }
-
-    public function lingkup()
-    {
-        return $this->lingkup;
+        return $this->skemId;
     }
 
     public function deskripsi()
@@ -41,14 +32,16 @@ class RencanaSkem
         return $this->deskripsi;
     }
 
-    public function poin()
-    {
-        return $this->poin;
-    }
-
     public function semester()
     {
         return $this->semester;
+    }
+
+    public function addRencanaSkem($skem, $deskripsi, $semester)
+    {
+        $rencanaSkemId = new RencanaSkemId();
+        $rencanaSkem = new RencanaSkem($rencanaSkemId, $skem, $deskripsi, $semester);
+        return $rencanaSkem;
     }
 
     

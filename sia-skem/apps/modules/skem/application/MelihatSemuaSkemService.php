@@ -22,7 +22,7 @@ class MelihatSemuaSkemService{
         $response = new MelihatSemuaSkemResponse();
         foreach($skems as $skem){
             $response->addSkem(
-                $skem->id(),
+                $skem->id()->id(),
                 $skem->kegiatan()->nama(),
                 $skem->kegiatan()->jenis(),
                 $skem->lingkup(),

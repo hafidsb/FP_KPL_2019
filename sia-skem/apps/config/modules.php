@@ -8,7 +8,7 @@ return array(
         'apiControllerNamespace' => 'SiaSkem\Skem\Controllers\Api',
         'className' => 'SiaSkem\Skem\Module',
         'path' => APP_PATH . '/modules/skem/Module.php',
-        'defaultRouting' => true,
+        'defaultRouting' => false,
         'defaultController' => 'skem',
         'defaultAction' => 'index'
     ],
