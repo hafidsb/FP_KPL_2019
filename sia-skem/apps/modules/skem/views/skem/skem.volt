@@ -1,4 +1,4 @@
-{% extends '../navbar.volt' %}
+{% extends 'navbar.volt' %}
 
 {% block content %}
 <div class="container mt-5 pt-2 bg-white border rounded" style="margin-top: 100px !important">
@@ -24,7 +24,7 @@
                 <td> {{ skem.jenisKegiatan }}</td>
                 <td>{{ skem.lingkup }}</td>
                 <td>
-                    <form action="/skem/update/poin" class="form-group row" method="post">
+                    <form action="/skem/poin" class="form-group row" method="post">
                         <input type="hidden" name="id" value="{{ skem.id }}">
                         <input type="number" class="form-control col-sm-3 mx-1" name="poin"
                             placeholder="{{ skem.poin }}" value="{{ skem.poin }}">

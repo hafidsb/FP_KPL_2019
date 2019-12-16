@@ -45,16 +45,14 @@ class SkemController extends Controller
         $this->view->pick('skem/skem');
     }
     
-    public function updateAction($part)
+    public function updatePoinAction()
     {
         if ($this->request->isPost()) {
-            if($part == 'poin'){
-                $id = $this->request->getPost('id');
-                $poin = $this->request->getPost('poin');
-                $request = new MengubahPoinSkemRequest($id, $poin);
-                $this->mengubahPoinSkemService->execute($request);
-                $this->response->redirect('skem');
-            }
+            $id = $this->request->getPost('id');
+            $poin = $this->request->getPost('poin');
+            $request = new MengubahPoinSkemRequest($id, $poin);
+            $this->mengubahPoinSkemService->execute($request);
+            $this->flashSession->success("Poin Berhasil Diubah");
         }
         $this->response->redirect('skem');
     }
@@ -68,6 +66,7 @@ class SkemController extends Controller
             $poin = $this->request->getPost('poin');
             $request = new MembuatSkemBaruRequest($namaKegiatan, $jenisKegiatan, $lingkup, $poin);
             $this->membuatSkemBaruService->execute($request);
+            $this->flashSession->success("Skem Berhasil Ditambahkan");
             $this->response->redirect('skem');
         }
         $this->view->pick('skem/create');
