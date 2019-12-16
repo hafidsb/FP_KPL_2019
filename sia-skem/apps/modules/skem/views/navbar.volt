@@ -13,6 +13,7 @@
 <body class="bg-light">
     <nav class="navbar navbar-dark bg-dark fixed-top">
         <a class="navbar-brand font-weight-bold" href="/">Sia Skem</a>
+        <a class="navbar-brand font-weight-bold" href="/realisasi_skem/">Realisasi Skem</a>
         <div class="navbar-nav ml-auto mx-5">
             {% if session.get('username') != null %} {# variable is not set #}
             <div class="nav-item active btn btn-danger">

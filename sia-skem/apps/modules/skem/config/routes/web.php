@@ -55,3 +55,24 @@ $router->add('/realisasi_skem/create', array(
     'controller' => 'realisasiSkem',
     'action' => 'create',
 ));
+
+$router->add('/realisasi_skem/delete/{id}', array(
+    'namespace' => 'SiaSkem\Skem\Controllers\Web',
+    'module' => 'skem',
+    'controller' => 'realisasiSkem',
+    'action' => 'delete',
+));
+
+$router->add('/realisasi_skem/edit/{id}', array(
+    'namespace' => 'SiaSkem\Skem\Controllers\Web',
+    'module' => 'skem',
+    'controller' => 'realisasiSkem',
+    'action' => 'edit',
+));
+
+$router->add('/realisasi_skem/semester', array(
+    'namespace' => 'SiaSkem\Skem\Controllers\Web',
+    'module' => 'skem',
+    'controller' => 'realisasiSkem',
+    'action' => 'bySemester',
+));

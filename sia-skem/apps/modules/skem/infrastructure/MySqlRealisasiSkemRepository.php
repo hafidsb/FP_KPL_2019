@@ -5,6 +5,7 @@ namespace SiaSkem\Skem\Infrastructure;
 use SiaSkem\Skem\Domain\Model\RealisasiSkemRepository;
 use SiaSkem\Skem\Domain\Model\RealisasiSkemFactory;
 use SiaSkem\Skem\Domain\Model\RealisasiSkem;
+use SiaSkem\Skem\Domain\Model\SkemId;
 use Phalcon\Db\Column;
 
 class MySqlRealisasiSkemRepository implements RealisasiSkemRepository{
@@ -26,10 +27,11 @@ class MySqlRealisasiSkemRepository implements RealisasiSkemRepository{
         $result = $this->db->query($query);
         $rows = $result->fetchAll();
         $realisasiSkems = array();
-        foreach ($rows as $row) {
+        foreach ($rows as $row) {            
+            $skemId = new SkemId($row["skem_id"]);            
             $realisasi = RealisasiSkemFactory::create(
                 $row["id"],
-                $row["skem_id"],
+                $skemId,
                 $row["deskripsi"],
                 $row["semester"],
                 $row["tanggal"]
@@ -37,6 +39,7 @@ class MySqlRealisasiSkemRepository implements RealisasiSkemRepository{
             );
             array_push($realisasiSkems, $realisasi);
         }
+        
         return $realisasiSkems;
     }
 
@@ -58,9 +61,10 @@ class MySqlRealisasiSkemRepository implements RealisasiSkemRepository{
         if ($row == false) {
             return null;
         }
+        $skemId = new SkemId($row["skem_id"]);
         $realisasi = RealisasiSkemFactory::create(
             $id,
-            $row["skem_id"],
+            $skemId,
             $row["deskripsi"],
             $row["semester"],
             $row["tanggal"]
@@ -68,12 +72,12 @@ class MySqlRealisasiSkemRepository implements RealisasiSkemRepository{
         return $realisasi;
     }
 
-    public function bySemester(int $semester) : ?RealisasiSkem
+    public function bySemester(int $semester) : array
     {
         $query = $this->db->prepare(
-            "SELECT id, skem_id, deskripsi, tervalidasi, tanggal
+            "SELECT id, skem_id, deskripsi, semester, tervalidasi, tanggal 
             FROM {$this->skemTableName}
-            WHERE semester = :semester"
+            WHERE semester=:semester"
         );
         $placeholders = [
             "semester" => $semester
@@ -81,24 +85,30 @@ class MySqlRealisasiSkemRepository implements RealisasiSkemRepository{
         $dataTypes = [
             "semester" => Column::BIND_PARAM_INT
         ];
-        $result = $this->db->executePrepared($query, $placeholders, $dataTypes); 
-        $row = $result->fetch();
-        if ($row == false) {
-            return null;
+        $result = $this->db->executePrepared($query, $placeholders, $dataTypes);         
+        $rows = $result->fetchAll();
+        $realisasiSkems = array();
+        foreach ($rows as $row) {            
+            $skemId = new SkemId($row["skem_id"]);            
+            $realisasi = RealisasiSkemFactory::create(
+                $row["id"],
+                $skemId,
+                $row["deskripsi"],
+                $row["semester"],
+                $row["tanggal"]
+
+            );
+            array_push($realisasiSkems, $realisasi);
         }
-        $realisasi = RealisasiSkemFactory::create(
-            $row["id"],
-            $row["skem_id"],
-            $row["deskripsi"],
-            $semester,
-            $row["tanggal"]
-        );
-        return $realisasi;
+        
+        return $realisasiSkems;
     }
 
     public function save(RealisasiSkem $realisasiSkem)
     {
         $isExist = $this->exist($realisasiSkem);
+        // var_dump($realisasiSkem);
+        // exit;
         $placeholders = [
             "id" => $realisasiSkem->id()->id(),
             "skem_id" => $realisasiSkem->skemId()->id(),
@@ -121,7 +131,7 @@ class MySqlRealisasiSkemRepository implements RealisasiSkemRepository{
         } else {
             $query =
                 "UPDATE {$this->skemTableName} SET
-                deskripsi=:deskripsi, semester=:semester
+                skem_id=:skem_id, deskripsi=:deskripsi, semester=:semester, tanggal=:tanggal
                 WHERE id = :id";
         }
         $success = $this->db->execute($query, $placeholders, $dataTypes);
@@ -130,21 +140,16 @@ class MySqlRealisasiSkemRepository implements RealisasiSkemRepository{
         }
     }
 
-    public function deleteById(string $id): ?RealisasiSkem
+    public function deleteById(string $id)
     {
+        $realisasiSkem = $this->byId($id);
+        if($realisasiSkem == null) return;
         $isExist = $this->exist($realisasiSkem);
         $placeholders = [
-            "id" => $realisasiSkem->id()->id(),
-            "skem_id" => $realisasiSkem->skemId()->id(),
-            "deskripsi" => $realisasiSkem->deskripsi(),
-            "semester" => $realisasiSkem->semester(),
-            "tanggal" => $realisasiSkem->tanggal()
+            "id" => $realisasiSkem->id()->id()
         ];
         $dataTypes = [
-            "id" => Column::BIND_PARAM_STR,
-            "skem_id" => Column::BIND_PARAM_STR,
-            "deskripsi" => Column::BIND_PARAM_STR,
-            "semester" => Column::BIND_PARAM_INT
+            "id" => Column::BIND_PARAM_STR
         ];
         $query = "";
         if($isExist){
