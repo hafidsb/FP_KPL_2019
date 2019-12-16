@@ -2,16 +2,13 @@
 
 namespace SiaSkem\Skem\Domain\Model;
 
-use Tuupola\KsuidFactory;
-
 class SkemFactory
 {
     public static function create($id, $namaKegiatan, $jenisKegiatan, $lingkup, $poin) : Skem
     {
-        $ksuid = KsuidFactory::create();
-        $newId = $id?:$ksuid->string();
+        $id = new SkemId($id);
         $kegiatan = new Kegiatan($namaKegiatan, $jenisKegiatan);
-        $skem = new Skem($newId, $kegiatan, $lingkup, $poin);
+        $skem = new Skem($id, $kegiatan, $lingkup, $poin);
         return $skem;
     }
 }
