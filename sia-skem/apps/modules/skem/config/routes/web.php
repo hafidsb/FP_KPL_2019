@@ -1,5 +1,19 @@
 <?php
 
+$router->add('/user/biro-kemahasiswaan/login', array(
+    'namespace' => 'SiaSkem\Skem\Controllers\Web',
+    'module' => 'skem',
+    'controller' => 'user',
+    'action' => 'loginBiroKemahasiswaan',
+));
+
+$router->add('/user/logout', array(
+    'namespace' => 'SiaSkem\Skem\Controllers\Web',
+    'module' => 'skem',
+    'controller' => 'user',
+    'action' => 'logout',
+));
+
 $router->addGet('/skem', array(
     'namespace' => 'SiaSkem\Skem\Controllers\Web',
     'module' => 'skem',

@@ -13,6 +13,13 @@
 <body class="bg-light">
     <nav class="navbar navbar-dark bg-dark fixed-top">
         <a class="navbar-brand font-weight-bold" href="/">Sia Skem</a>
+        <div class="navbar-nav ml-auto mx-5">
+            {% if session.get('username') != null %} {# variable is not set #}
+            <div class="nav-item active btn btn-danger">
+                <a class="nav-link" href="/user/logout">Logout</a>
+            </div>
+            {% endif %}
+        </div>
         <a class="navbar-brand font-weight-bold" href="/skem/guide">Petunjuk Teknis</a>
     </nav>
     <div class="popup" style="z-index:9999 !important;position: fixed; transform: translate(-60%, 0); left: 45%;">

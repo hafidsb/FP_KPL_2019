@@ -4,12 +4,14 @@ use PHPUnit\Framework\TestCase;
 use SiaSkem\Skem\Domain\Model\Kegiatan;
 use SiaSkem\Skem\Domain\Model\Skem;
 use SiaSkem\Skem\Domain\Model\SkemFactory;
+use SiaSkem\Skem\Domain\Model\SkemId;
 
 class SkemFactoryTest extends TestCase
 {
     public function getDummySkem($namaKegiatan, $jenisKegiatan , $id, $lingkup, $poin)
     {
         $kegiatan = new Kegiatan($namaKegiatan, $jenisKegiatan);
+        $id = new SkemId($id);
         $skem = new Skem(
             $id,
             $kegiatan,

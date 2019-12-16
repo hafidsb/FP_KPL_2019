@@ -47,6 +47,10 @@ class SkemController extends Controller
     
     public function updatePoinAction()
     {
+        if ($this->session->get('role') != "BiroKemahasiswaan") {
+            $this->flashSession->error("Anda Bukan Biro Kemahasiswaan!");
+            $this->response->redirect('skem');
+        }
         if ($this->request->isPost()) {
             $id = $this->request->getPost('id');
             $poin = $this->request->getPost('poin');
@@ -59,6 +63,10 @@ class SkemController extends Controller
 
     public function createAction()
     {
+        if ($this->session->get('role') != "BiroKemahasiswaan") {
+            $this->flashSession->error("Anda Bukan Biro Kemahasiswaan!");
+            $this->response->redirect('skem');
+        }
         if ($this->request->isPost()){
             $namaKegiatan = $this->request->getPost('nama_kegiatan');
             $jenisKegiatan = $this->request->getPost('jenis_kegiatan');
