@@ -5,6 +5,7 @@ namespace SiaSkem\Skem\Infrastructure;
 use SiaSkem\Skem\Domain\Model\RealisasiSkemRepository;
 use SiaSkem\Skem\Domain\Model\RealisasiSkemFactory;
 use SiaSkem\Skem\Domain\Model\RealisasiSkem;
+use SiaSkem\Skem\Domain\Model\SkemId;
 use Phalcon\Db\Column;
 
 class MySqlRealisasiSkemRepository implements RealisasiSkemRepository{
@@ -26,10 +27,11 @@ class MySqlRealisasiSkemRepository implements RealisasiSkemRepository{
         $result = $this->db->query($query);
         $rows = $result->fetchAll();
         $realisasiSkems = array();
-        foreach ($rows as $row) {
+        foreach ($rows as $row) {            
+            $skemId = new SkemId($row["skem_id"]);            
             $realisasi = RealisasiSkemFactory::create(
                 $row["id"],
-                $row["skem_id"],
+                $skemId,
                 $row["deskripsi"],
                 $row["semester"],
                 $row["tanggal"]
@@ -37,6 +39,7 @@ class MySqlRealisasiSkemRepository implements RealisasiSkemRepository{
             );
             array_push($realisasiSkems, $realisasi);
         }
+        
         return $realisasiSkems;
     }
 

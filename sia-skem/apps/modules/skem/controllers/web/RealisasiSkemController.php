@@ -5,6 +5,7 @@ namespace SiaSkem\Skem\Controllers\Web;
 use Phalcon\Mvc\Controller;
 use SiaSkem\Skem\Application\MembuatRealisasiSkemBaruRequest;
 use SiaSkem\Skem\Application\MembuatRealisasiSkemBaruService;
+use SiaSkem\Skem\Application\MelihatSemuaRealisasiSkemService;
 
 class RealisasiSkemController extends Controller
 {
@@ -13,22 +14,33 @@ class RealisasiSkemController extends Controller
      */
      private $membuatRealisasiSkemBaruService;
 
+     /**
+     * @var MelihatSemuaRealisasiSkemService $melihatSemuaRealisasiSkemService
+     */
+    private $melihatSemuaRealisasiSkemService;
+
      public function onConstruct()
      {
-         $skemRepository = $this->di->getShared('mysql_skem_repository');
-         $realisasiSkemRepository = $this->di->getShared('mysql_realisasi_skem_repository');
-         $this->membuatRealisasiSkemBaruService = 
+        $skemRepository = $this->di->getShared('mysql_skem_repository');
+        $realisasiSkemRepository = $this->di->getShared('mysql_realisasi_skem_repository');
+         
+        $this->membuatRealisasiSkemBaruService = 
             new MembuatRealisasiSkemBaruService(
-                $realisasiSkemRepository, $skemRepository);
+                $realisasiSkemRepository, $skemRepository
+            );
+        $this->melihatSemuaRealisasiSkemService = 
+            new MelihatSemuaRealisasiSkemService(
+                $realisasiSkemRepository, $skemRepository
+            );
      }
 
      public function indexAction()
     {
-        // $skemsResponse = $this->melihatSemuaSkemService->execute();
-        // $skems = $skemsResponse->skems;
-        // $this->view->setVars([
-        //     'skems' => $skems
-        // ]);
+        $realisasiResponse = $this->melihatSemuaRealisasiSkemService->execute();
+        $realisasi = $realisasiResponse->realisasiSkems;
+        $this->view->setVars([
+            'realisasi' => $realisasi
+        ]);
         $this->view->pick('realisasi_skem/skem');
     }
 

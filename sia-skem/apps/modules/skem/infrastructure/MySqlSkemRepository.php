@@ -55,6 +55,7 @@ class MySqlSkemRepository implements SkemRepository{
         ];
         $result = $this->db->executePrepared($query, $placeholders, $dataTypes); 
         $row = $result->fetch();
+        
         if ($row == false) {
             return null;
         }

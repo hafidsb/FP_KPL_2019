@@ -2,34 +2,49 @@
 
 {% block content %}
 <div class="container mt-5 pt-2 bg-white border rounded" style="margin-top: 100px !important">
-    <div class="mb-2 row">
-        <h2 class="col-1">Realisasi Skem</h2>
-        <div class="col-2">
+    <div class="mb-2 row" style="margin: 23px;">
+        <h2>Realisasi Skem</h2>
+        <div style="margin-left: 10px;">
             <a href="/realisasi_skem/create" class="btn btn-primary">Tambah Realisasi Skem</a>
         </div>
     </div>
     <table class="table">
         <thead class="thead-dark">
             <tr>
+                <th scope="col">No.</th>
                 <th scope="col">Nama Kegiatan</th>
                 <th scope="col">Jenis Kegiatan</th>
                 <th scope="col">Lingkup</th>
                 <th scope="col">Poin</th>
+                <th scope="col">Deskripsi</th>
+                <th scope="col">Semester</th>
+                <th scope="col">Status Validasi</th>
+                <th scope="col">Tanggal Pelaksanaan</th>
+                <th scope="col">Aksi</th>
             </tr>
         </thead>
         <tbody> 
-        {% for skem in skems %} 
+        {% for skem in realisasi %} 
             <tr>
-                <th scope="row">{{ skem.namaKegiatan }}</th>
-                <td> {{ skem.jenisKegiatan }}</td>
-                <td>{{ skem.lingkup }}</td>
-                <td>
-                    <form action="/skem/poin" class="form-group row" method="post">
-                        <input type="hidden" name="id" value="{{ skem.id }}">
-                        <input type="number" class="form-control col-sm-3 mx-1" name="poin"
-                            placeholder="{{ skem.poin }}" value="{{ skem.poin }}">
-                        <input type="submit" value="Ubah" class="btn btn-primary">
-                    </form>
+                <th scope="row">{{ loop.index }}</th>
+                <td scope="row">{{ skem.namaKegiatan }}</td>
+                <td scope="row">{{ skem.jenisKegiatan }}</td>
+                <td scope="row">{{ skem.lingkup }}</td>
+                <td scope="row">{{ skem.poin }}</td>
+                <td scope="row">{{ skem.deskripsi }}</td>
+                <td scope="row">{{ skem.semester }}</td>
+                {% if skem.tervalidasi == null %}
+                    <td scope="row">Belum Tervalidasi</td>
+                {% else %}
+                    <td scope="row">Tervalidasi</td>
+                {% endif%}
+                <td scope="row">{{ skem.tanggal }}</td>
+                <td scope="row" style="width: 100%;">
+                    <button type="button" class="btn btn-primary">Ubah</button>
+                    |
+                    <button type="button" class="btn btn-danger">Hapus</button>
+                    |
+                    <button type="button" class="btn btn-success">Validasi Skem</button>
                 </td>
             </tr> 
         {% endfor %}

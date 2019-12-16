@@ -13,6 +13,7 @@
 <body class="bg-light">
     <nav class="navbar navbar-dark bg-dark fixed-top">
         <a class="navbar-brand font-weight-bold" href="/">Sia Skem</a>
+        <a class="navbar-brand font-weight-bold" href="/realisasi_skem/">Realisasi Skem</a>
         <a class="navbar-brand font-weight-bold" href="/skem/guide">Petunjuk Teknis</a>
     </nav>
     <div class="popup" style="z-index:9999 !important;position: fixed; transform: translate(-60%, 0); left: 45%;">
