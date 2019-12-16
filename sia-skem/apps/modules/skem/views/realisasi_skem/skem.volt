@@ -40,9 +40,9 @@
                 {% endif%}
                 <td scope="row">{{ skem.tanggal }}</td>
                 <td scope="row" style="width: 100%;">
-                    <button type="button" class="btn btn-primary">Ubah</button>
+                    <a href="/realisasi_skem/edit/{{ skem.id }}" class="btn btn-primary" role="button">Ubah</a>
                     |
-                    <button type="button" class="btn btn-danger">Hapus</button>
+                    <a href="/realisasi_skem/delete/{{ skem.id }}" class="btn btn-danger" role="button">Hapus</a>
                     |
                     <button type="button" class="btn btn-success">Validasi Skem</button>
                 </td>

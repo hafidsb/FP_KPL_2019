@@ -69,6 +69,28 @@ class MySqlSkemRepository implements SkemRepository{
         return $skem;
     }
 
+    public function deleteById(string $id)
+    {
+        $skem = $this->byId($id);
+        if($skem == null) return;
+        $isExist = $this->exist($skem);
+        $placeholders = [
+            "id" => $skem->id()->id()
+        ];
+        $dataTypes = [
+            "id" => Column::BIND_PARAM_STR
+        ];
+        $query = "";
+        if($isExist){
+            $query = 
+                "DELETE FROM {$this->skemTableName} WHERE id=:id";
+            $success = $this->db->execute($query, $placeholders, $dataTypes);
+            if (!$success) {
+                throw new DatabaseExecutionFailedException("Something wrong with database connection or query");  
+            }
+        } 
+    }
+
     public function save(Skem $skem)
     {
         $isExist = $this->exist($skem);

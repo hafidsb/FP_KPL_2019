@@ -61,9 +61,10 @@ class MySqlRealisasiSkemRepository implements RealisasiSkemRepository{
         if ($row == false) {
             return null;
         }
+        $skemId = new SkemId($row["skem_id"]);
         $realisasi = RealisasiSkemFactory::create(
             $id,
-            $row["skem_id"],
+            $skemId,
             $row["deskripsi"],
             $row["semester"],
             $row["tanggal"]
@@ -133,21 +134,16 @@ class MySqlRealisasiSkemRepository implements RealisasiSkemRepository{
         }
     }
 
-    public function deleteById(string $id): ?RealisasiSkem
+    public function deleteById(string $id)
     {
+        $realisasiSkem = $this->byId($id);
+        if($realisasiSkem == null) return;
         $isExist = $this->exist($realisasiSkem);
         $placeholders = [
-            "id" => $realisasiSkem->id()->id(),
-            "skem_id" => $realisasiSkem->skemId()->id(),
-            "deskripsi" => $realisasiSkem->deskripsi(),
-            "semester" => $realisasiSkem->semester(),
-            "tanggal" => $realisasiSkem->tanggal()
+            "id" => $realisasiSkem->id()->id()
         ];
         $dataTypes = [
-            "id" => Column::BIND_PARAM_STR,
-            "skem_id" => Column::BIND_PARAM_STR,
-            "deskripsi" => Column::BIND_PARAM_STR,
-            "semester" => Column::BIND_PARAM_INT
+            "id" => Column::BIND_PARAM_STR
         ];
         $query = "";
         if($isExist){
