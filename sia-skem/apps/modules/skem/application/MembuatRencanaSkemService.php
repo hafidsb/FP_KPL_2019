@@ -4,12 +4,10 @@ namespace SiaSkem\Skem\Application;
 
 use SiaSkem\Skem\Domain\Model\RencanaSkem;
 use SiaSkem\Skem\Domain\Model\RencanaSkemRepository;
-use SiaSkem\Skem\Domain\Model\SkemRepository;
 
 class MembuatRencanaSkemService
 {
     private $rencanaSkemRepository;
-    private $skemRepository;
 
     public function __construct(RencanaSkemRepository $rencanaSkemRepository)
     {
