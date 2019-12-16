@@ -8,6 +8,7 @@ use SiaSkem\Skem\Application\MengubahPoinSkemRequest;
 use SiaSkem\Skem\Application\MengubahPoinSkemService;
 use SiaSkem\Skem\Domain\Model\Kegiatan;
 use SiaSkem\Skem\Domain\Model\Skem;
+use SiaSkem\Skem\Domain\Model\SkemId;
 use SiaSkem\Skem\Domain\Model\SkemRepository;
 
 class MengubahPoinSkemTest extends TestCase
@@ -36,7 +37,7 @@ class MengubahPoinSkemTest extends TestCase
         $kegiatan = new Kegiatan("Sepak Bola", "Olaraga");
         $id = "p6UEyCc8D8ecLijAI5zVwOTP3D0";
         $skem = new Skem(
-            $id,
+            new SkemId($id),
             $kegiatan,
             "Finalis",
             500

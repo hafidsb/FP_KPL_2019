@@ -7,6 +7,7 @@ use SiaSkem\Skem\Application\MelihatSemuaSkemResponse;
 use SiaSkem\Skem\Application\MelihatSemuaSkemService;
 use SiaSkem\Skem\Domain\Model\Kegiatan;
 use SiaSkem\Skem\Domain\Model\Skem;
+use SiaSkem\Skem\Domain\Model\SkemId;
 use SiaSkem\Skem\Domain\Model\SkemFactory;
 use SiaSkem\Skem\Domain\Model\SkemRepository;
 
@@ -34,7 +35,7 @@ class MelihatSemuaSkemTest extends TestCase
         $kegiatan1 = new Kegiatan("Sepak Bola", "Olaraga");
         $id1 = "p6UEyCc8D8ecLijAI5zVwOTP3D0";
         $skem1 = new Skem(
-            $id1,
+            new SkemId($id1),
             $kegiatan1,
             "Finalis",
             "500"
@@ -43,7 +44,7 @@ class MelihatSemuaSkemTest extends TestCase
         $kegiatan2 = new Kegiatan("Basket", "Olahraga");
         $id2 = "1UhCjPVooeXJzwRkh36I62XJOYe";
         $skem2 = new Skem(
-            $id2,
+            new SkemId($id2),
             $kegiatan2,
             "Semi Final",
             "250"

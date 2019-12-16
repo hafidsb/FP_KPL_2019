@@ -6,6 +6,7 @@ use SiaSkem\Skem\Application\MembuatSkemBaruRequest;
 use SiaSkem\Skem\Application\MembuatSkemBaruService;
 use SiaSkem\Skem\Domain\Model\Kegiatan;
 use SiaSkem\Skem\Domain\Model\Skem;
+use SiaSkem\Skem\Domain\Model\SkemId;
 use SiaSkem\Skem\Domain\Model\SkemRepository;
 
 class MembuatSkemBaruTest extends TestCase
@@ -34,7 +35,7 @@ class MembuatSkemBaruTest extends TestCase
         $kegiatan = new Kegiatan("Sepak Bola", "Olaraga");
         $id = "p6UEyCc8D8ecLijAI5zVwOTP3D0";
         $skem = new Skem(
-            $id,
+            new SkemId($id),
             $kegiatan,
             "Finalis",
             500
