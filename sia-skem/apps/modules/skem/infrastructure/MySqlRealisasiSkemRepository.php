@@ -110,13 +110,14 @@ class MySqlRealisasiSkemRepository implements RealisasiSkemRepository{
             "id" => Column::BIND_PARAM_STR,
             "skem_id" => Column::BIND_PARAM_STR,
             "deskripsi" => Column::BIND_PARAM_STR,
-            "semester" => Column::BIND_PARAM_INT
+            "semester" => Column::BIND_PARAM_INT,
+            "tanggal" => Column::BIND_PARAM_STR
         ];
         $query = "";
         if(!$isExist){
             $query =
-                "INSERT INTO {$this->skemTableName}(id, skem_id, deskripsi, semester)
-                VALUE (:id, :skem_id, :deskripsi, :semester)";  
+                "INSERT INTO {$this->skemTableName}(id, skem_id, deskripsi, semester, tanggal)
+                VALUE (:id, :skem_id, :deskripsi, :semester, :tanggal)";  
         } else {
             $query =
                 "UPDATE {$this->skemTableName} SET
