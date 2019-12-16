@@ -25,7 +25,6 @@ class Skem
 
     public function kegiatan()
     {
-        $this->kegiatan->nama();
         return $this->kegiatan;
     }
 
