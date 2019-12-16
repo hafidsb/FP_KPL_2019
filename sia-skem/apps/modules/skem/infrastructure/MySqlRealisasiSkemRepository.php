@@ -103,6 +103,8 @@ class MySqlRealisasiSkemRepository implements RealisasiSkemRepository{
     public function save(RealisasiSkem $realisasiSkem)
     {
         $isExist = $this->exist($realisasiSkem);
+        // var_dump($realisasiSkem);
+        // exit;
         $placeholders = [
             "id" => $realisasiSkem->id()->id(),
             "skem_id" => $realisasiSkem->skemId()->id(),
@@ -125,7 +127,7 @@ class MySqlRealisasiSkemRepository implements RealisasiSkemRepository{
         } else {
             $query =
                 "UPDATE {$this->skemTableName} SET
-                deskripsi=:deskripsi, semester=:semester
+                skem_id=:skem_id, deskripsi=:deskripsi, semester=:semester, tanggal=:tanggal
                 WHERE id = :id";
         }
         $success = $this->db->execute($query, $placeholders, $dataTypes);

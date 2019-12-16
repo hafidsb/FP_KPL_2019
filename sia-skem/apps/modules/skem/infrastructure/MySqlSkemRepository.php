@@ -94,6 +94,7 @@ class MySqlSkemRepository implements SkemRepository{
     public function save(Skem $skem)
     {
         $isExist = $this->exist($skem);
+
         $placeholders = [
             "id" => $skem->id()->id(),
             "namaKegiatan" => $skem->kegiatan()->nama(),

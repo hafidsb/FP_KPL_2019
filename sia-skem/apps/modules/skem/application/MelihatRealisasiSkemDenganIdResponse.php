@@ -2,13 +2,12 @@
 
 namespace SiaSkem\Skem\Application;
 
-class MelihatSemuaRealisasiSkemResponse
-{
-    public $realisasiSkems;
 
+class MelihatRealisasiSkemDenganIdResponse
+{
     public function __construct()
     {
-        $this->realisasiSkems = array();
+        $this->realisasi = null;
     }
 
     public function addRealisasiSkem(
@@ -32,6 +31,6 @@ class MelihatSemuaRealisasiSkemResponse
             $realisasiSkem->semester = $semester;
             $realisasiSkem->tervalidasi = $tervalidasi;
             $realisasiSkem->tanggal = $tanggal;
-            array_push($this->realisasiSkems, $realisasiSkem);
+            $this->realisasi = $realisasiSkem;
     }
 }
