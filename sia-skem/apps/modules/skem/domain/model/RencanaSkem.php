@@ -9,7 +9,7 @@ class RencanaSkem
     private $deskripsi;
     private $semester;
 
-    public function __construct($id, SkemId $skemId, $deskripsi, $semester)
+    public function __construct(RencanaSkemId $id, SkemId $skemId, $deskripsi, $semester)
     {
         $this->id = $id;
         $this->skemId = $skemId;
@@ -35,6 +35,13 @@ class RencanaSkem
     public function semester()
     {
         return $this->semester;
+    }
+
+    public function addRencanaSkem($skem, $deskripsi, $semester)
+    {
+        $rencanaSkemId = new RencanaSkemId();
+        $rencanaSkem = new RencanaSkem($rencanaSkemId, $skem, $deskripsi, $semester);
+        return $rencanaSkem;
     }
 
     

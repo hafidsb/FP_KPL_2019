@@ -43,4 +43,5 @@ class Skem
     {
         $this->poin = $poinBaru;
     }
+    
 }
