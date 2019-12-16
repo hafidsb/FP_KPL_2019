@@ -10,6 +10,8 @@ use SiaSkem\Skem\Application\MenghapusRealisasiSkemService;
 use SiaSkem\Skem\Application\MelihatRealisasiSkemDenganIdService;
 use SiaSkem\Skem\Application\MengubahRealisasiSkemRequest;
 use SiaSkem\Skem\Application\MengubahRealisasiSkemService;
+use SiaSkem\Skem\Application\MelihatRealisasiSkemDenganSemesterService
+;
 
 class RealisasiSkemController extends Controller
 {
@@ -38,6 +40,11 @@ class RealisasiSkemController extends Controller
      */
     private $mengubahRealisasiSkemService;
 
+    /**
+     * @var MelihatRealisasiSkemDenganSemesterService $melihatRealisasiSkemDenganSemesterService
+     */
+    private $melihatRealisasiSkemDenganSemesterService;
+
     public function onConstruct()
     {
         $skemRepository = $this->di->getShared('mysql_skem_repository');
@@ -61,6 +68,10 @@ class RealisasiSkemController extends Controller
             );
         $this->mengubahRealisasiSkemService = 
             new MengubahRealisasiSkemService(
+                $realisasiSkemRepository, $skemRepository
+            );
+        $this->melihatRealisasiSkemDenganSemesterService = 
+            new MelihatRealisasiSkemDenganSemesterService(
                 $realisasiSkemRepository, $skemRepository
             );
     }
@@ -145,6 +156,26 @@ class RealisasiSkemController extends Controller
         ]);
 
         $this->view->pick('realisasi_skem/edit');
+     }
+
+     public function bySemesterAction()
+     {
+        if($this->request->isPost()){
+            $semester = $this->request->getPost('semester');
+            $realisasiResponse = $this->melihatRealisasiSkemDenganSemesterService->execute($semester);
+            $realisasi = $realisasiResponse->realisasiSkems;
+
+            if(!empty($realisasi)){
+                $this->view->setVars([
+                    'realisasi' => $realisasi
+                ]);
+                $this->view->pick('realisasi_skem/skem');
+            } else {
+                $this->view->pick('realisasi_skem/skem_not_found');
+            }
+        } else {
+            $this->response->redirect('realisasi_skem');
+        }        
      }
 
 }

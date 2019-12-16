@@ -55,3 +55,10 @@ $router->add('/realisasi_skem/edit/{id}', array(
     'controller' => 'realisasiSkem',
     'action' => 'edit',
 ));
+
+$router->add('/realisasi_skem/semester', array(
+    'namespace' => 'SiaSkem\Skem\Controllers\Web',
+    'module' => 'skem',
+    'controller' => 'realisasiSkem',
+    'action' => 'bySemester',
+));

@@ -72,12 +72,12 @@ class MySqlRealisasiSkemRepository implements RealisasiSkemRepository{
         return $realisasi;
     }
 
-    public function bySemester(int $semester) : ?RealisasiSkem
+    public function bySemester(int $semester) : array
     {
         $query = $this->db->prepare(
-            "SELECT id, skem_id, deskripsi, tervalidasi, tanggal
+            "SELECT id, skem_id, deskripsi, semester, tervalidasi, tanggal 
             FROM {$this->skemTableName}
-            WHERE semester = :semester"
+            WHERE semester=:semester"
         );
         $placeholders = [
             "semester" => $semester
@@ -85,19 +85,23 @@ class MySqlRealisasiSkemRepository implements RealisasiSkemRepository{
         $dataTypes = [
             "semester" => Column::BIND_PARAM_INT
         ];
-        $result = $this->db->executePrepared($query, $placeholders, $dataTypes); 
-        $row = $result->fetch();
-        if ($row == false) {
-            return null;
+        $result = $this->db->executePrepared($query, $placeholders, $dataTypes);         
+        $rows = $result->fetchAll();
+        $realisasiSkems = array();
+        foreach ($rows as $row) {            
+            $skemId = new SkemId($row["skem_id"]);            
+            $realisasi = RealisasiSkemFactory::create(
+                $row["id"],
+                $skemId,
+                $row["deskripsi"],
+                $row["semester"],
+                $row["tanggal"]
+
+            );
+            array_push($realisasiSkems, $realisasi);
         }
-        $realisasi = RealisasiSkemFactory::create(
-            $row["id"],
-            $row["skem_id"],
-            $row["deskripsi"],
-            $semester,
-            $row["tanggal"]
-        );
-        return $realisasi;
+        
+        return $realisasiSkems;
     }
 
     public function save(RealisasiSkem $realisasiSkem)
