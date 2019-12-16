@@ -7,12 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <title>Document</title>
+    <title>Sistem Informasi Akademik SKEM</title>
 </head>
 
 <body class="bg-light">
     <nav class="navbar navbar-dark bg-dark fixed-top">
         <a class="navbar-brand font-weight-bold" href="/">Sia Skem</a>
+        <a class="navbar-brand font-weight-bold" href="/skem/guide">Petunjuk Teknis</a>
     </nav>
     <div class="popup" style="z-index:9999 !important;position: fixed; transform: translate(-60%, 0); left: 45%;">
         <?php $this->flashSession->output() ?>
