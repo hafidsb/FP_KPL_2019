@@ -37,10 +37,11 @@ class RencanaSkem
         return $this->semester;
     }
 
-    public function addRencanaSkem($skem, $deskripsi, $semester)
+    public function addRencanaSkem($skemId, $deskripsi, $semester)
     {
         $rencanaSkemId = new RencanaSkemId();
-        $rencanaSkem = new RencanaSkem($rencanaSkemId, $skem, $deskripsi, $semester);
+        $skemId = new SkemId($skemId);
+        $rencanaSkem = new RencanaSkem($rencanaSkemId, $skemId, $deskripsi, $semester);
         return $rencanaSkem;
     }
 

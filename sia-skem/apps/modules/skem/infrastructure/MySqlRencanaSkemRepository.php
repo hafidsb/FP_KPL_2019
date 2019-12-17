@@ -59,7 +59,7 @@ class MySqlRencanaSkemRepository implements RencanaSkemRepository
         ];
         
         $query = "INSERT INTO {$this->tableName}(id, skem_id, deskripsi, semester)
-                    VALUE (:id, :skemId :deskripsi, :semester)";
+                    VALUE (:id, :skemId, :deskripsi, :semester)";
         $success = $this->db->execute($query, $placeholders, $dataTypes);
         if (!$success) 
         {

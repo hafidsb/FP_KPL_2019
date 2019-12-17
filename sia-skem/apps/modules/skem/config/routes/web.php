@@ -76,3 +76,24 @@ $router->add('/realisasi_skem/semester', array(
     'controller' => 'realisasiSkem',
     'action' => 'bySemester',
 ));
+
+$router->add('/rencana_skem', array(
+    'namespace' => 'SiaSkem\Skem\Controllers\Web',
+    'module' => 'skem',
+    'controller' => 'rencanaSkem',
+    'action' => 'index',
+));
+
+$router->add('/rencana_skem/create', array(
+    'namespace' => 'SiaSkem\Skem\Controllers\Web',
+    'module' => 'skem',
+    'controller' => 'rencanaSkem',
+    'action' => 'create',
+));
+
+$router->add('/rencana_skem/delete/{id}', array(
+    'namespace' => 'SiaSkem\Skem\Controllers\Web',
+    'module' => 'skem',
+    'controller' => 'rencanaSkem',
+    'action' => 'delete',
+));
