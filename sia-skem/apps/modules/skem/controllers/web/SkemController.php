@@ -50,6 +50,7 @@ class SkemController extends Controller
         if ($this->session->get('role') != "BiroKemahasiswaan") {
             $this->flashSession->error("Anda Bukan Biro Kemahasiswaan!");
             $this->response->redirect('skem');
+            return;
         }
         if ($this->request->isPost()) {
             $id = $this->request->getPost('id');
@@ -66,6 +67,7 @@ class SkemController extends Controller
         if ($this->session->get('role') != "BiroKemahasiswaan") {
             $this->flashSession->error("Anda Bukan Biro Kemahasiswaan!");
             $this->response->redirect('skem');
+            return;
         }
         if ($this->request->isPost()){
             $namaKegiatan = $this->request->getPost('nama_kegiatan');
