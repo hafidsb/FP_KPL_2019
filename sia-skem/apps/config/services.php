@@ -8,6 +8,7 @@ use Phalcon\Mvc\Dispatcher;
 use Phalcon\Mvc\View;
 use Phalcon\Flash\Direct as FlashDirect;
 use Phalcon\Flash\Session as FlashSession;
+use SiaSkem\Skem\Infrastructure\MySqlRencanaSkemRepository;
 use SiaSkem\Skem\Infrastructure\MySqlRealisasiSkemRepository;
 use SiaSkem\Skem\Infrastructure\MySqlSkemRepository;
 use SiaSkem\Skem\Infrastructure\MySqlUserRepository;
@@ -125,6 +126,13 @@ $di->setShared('mysql_realisasi_skem_repository', function () use ($di){
 
     return $instance;
 });
+
+$di->setShared('mysql_rencana_skem_repository', function () use ($di){
+    $instance = new MySqlRencanaSkemRepository($di);
+
+    return $instance;
+});
+
 
 $di->setShared('mysql_user_repository', function () use ($di){
     $instance = new MySqlUserRepository($di);

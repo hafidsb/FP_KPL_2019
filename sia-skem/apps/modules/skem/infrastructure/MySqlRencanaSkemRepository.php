@@ -57,7 +57,7 @@ class MySqlRencanaSkemRepository implements RencanaSkemRepository
             "deskripsi" => Column::BIND_PARAM_STR,
             "semester" => Column::BIND_PARAM_INT,
         ];
-
+        
         $query = "INSERT INTO {$this->tableName}(id, skem_id, deskripsi, semester)
                     VALUE (:id, :skemId :deskripsi, :semester)";
         $success = $this->db->execute($query, $placeholders, $dataTypes);
@@ -88,5 +88,6 @@ class MySqlRencanaSkemRepository implements RencanaSkemRepository
 
 
     }
+
 
 }
