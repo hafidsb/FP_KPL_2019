@@ -23,7 +23,7 @@ class MelihatSemuaSkemTest extends TestCase
     {
         $this->skemRepositoryMock = 
             $this->getMockBuilder(SkemRepository::class)
-                ->setMethods(["all", "byId", "save"])
+                ->setMethods(["all", "byId", "save", "deleteById"])
                 ->getMock();  
 
         $this->skemRepositoryMock->method("all")->willReturn($this->getDummySkems());   

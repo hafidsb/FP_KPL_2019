@@ -24,7 +24,7 @@ class MembuatSkemBaruTest extends TestCase
     {
         $this->skemRepositoryMock = 
             $this->getMockBuilder(SkemRepository::class)
-                ->setMethods(["all", "byId", "save"])
+                ->setMethods(["all", "byId", "save", "deleteById"])
                 ->getMock();  
 
         $this->membuatSkemBaruService = new MembuatSkemBaruService($this->skemRepositoryMock);

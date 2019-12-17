@@ -6,6 +6,7 @@ use SiaSkem\Skem\Application\MembuatSkemBaruRequest;
 use SiaSkem\Skem\Application\MembuatSkemBaruService;
 use SiaSkem\Skem\Application\MengubahPoinSkemRequest;
 use SiaSkem\Skem\Application\MengubahPoinSkemService;
+use SiaSkem\Skem\Application\SkemNotFoundException;
 use SiaSkem\Skem\Domain\Model\Kegiatan;
 use SiaSkem\Skem\Domain\Model\Skem;
 use SiaSkem\Skem\Domain\Model\SkemId;
@@ -26,7 +27,7 @@ class MengubahPoinSkemTest extends TestCase
     {
         $this->skemRepositoryMock = 
             $this->getMockBuilder(SkemRepository::class)
-                ->setMethods(["all", "byId", "save"])
+                ->setMethods(["all", "byId", "save", "deleteById"])
                 ->getMock();  
 
         $this->mengubahPoinSkemService = new MengubahPoinSkemService($this->skemRepositoryMock);
@@ -58,5 +59,13 @@ class MengubahPoinSkemTest extends TestCase
         $this->skemRepositoryMock->expects($this->once())->method('byId')->will($this->returnValue($dummySkem));;
         $this->skemRepositoryMock->expects($this->once())->method('save');
         $this->assertNull($this->mengubahPoinSkemService->execute($dummyRequest));  
+    }
+
+    public function testNotFoundException()
+    {
+        $dummyRequest = $this->getDummyRequest();
+        $this->skemRepositoryMock->expects($this->once())->method('byId')->willReturn(null);
+        $this->expectException(SkemNotFoundException::class);
+        $this->assertNull($this->mengubahPoinSkemService->execute($dummyRequest));
     }
 }
