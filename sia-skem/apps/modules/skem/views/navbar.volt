@@ -12,9 +12,15 @@
 
 <body class="bg-light">
     <nav class="navbar navbar-dark bg-dark fixed-top">
-        <a class="navbar-brand font-weight-bold" href="/">Sia Skem</a>
-        <a class="navbar-brand font-weight-bold" href="/rencana_skem/">Rencana Skem</a>
-        <a class="navbar-brand font-weight-bold" href="/realisasi_skem/">Realisasi Skem</a>
+        <style>
+        a:hover{
+            background-color: #fff;
+            color: #000 !important;
+        }
+        </style>
+        <a class="navbar-brand font-weight-bold rounded p-2" href="/">Sia Skem</a>
+        <a class="navbar-brand font-weight-bold rounded p-2" href="/rencana_skem/">Rencana Skem</a>
+        <a class="navbar-brand font-weight-bold rounded p-2" href="/realisasi_skem/">Realisasi Skem</a>
         <div class="navbar-nav ml-auto mx-5">
             {% if session.get('username') != null %} {# variable is not set #}
             <div class="nav-item active btn btn-danger">
@@ -22,7 +28,7 @@
             </div>
             {% endif %}
         </div>
-        <a class="navbar-brand font-weight-bold" href="/skem/guide">Petunjuk Teknis</a>
+        <a class="navbar-brand font-weight-bold rounded p-2" href="/skem/guide">Petunjuk Teknis</a>
     </nav>
     <div class="popup" style="z-index:9999 !important;position: fixed; transform: translate(-60%, 0); left: 45%;">
         <?php $this->flashSession->output() ?>
