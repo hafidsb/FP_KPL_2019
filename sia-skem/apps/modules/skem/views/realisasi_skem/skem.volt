@@ -51,7 +51,7 @@
                 <td scope="row">{{ skem.poin }}</td>
                 <td scope="row">{{ skem.deskripsi }}</td>
                 <td scope="row">{{ skem.semester }}</td>
-                {% if skem.tervalidasi == null %}
+                {% if skem.tervalidasi is false %}
                     <td scope="row">Belum Tervalidasi</td>
                 {% else %}
                     <td scope="row">Tervalidasi</td>
@@ -62,7 +62,7 @@
                     |
                     <a href="/realisasi_skem/delete/{{ skem.id }}" class="btn btn-danger" role="button">Hapus</a>
                     |
-                    <button type="button" class="btn btn-success">Validasi Skem</button>
+                    <a href="/realisasi_skem/validasi/{{ skem.id }}" type="button" class="btn btn-success">Validasi Skem</a>
                 </td>
             </tr> 
         {% endfor %}

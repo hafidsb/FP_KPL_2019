@@ -70,6 +70,14 @@ $router->add('/realisasi_skem/edit/{id}', array(
     'action' => 'edit',
 ));
 
+$router->add('/realisasi_skem/validasi/{id}', array(
+    'namespace' => 'SiaSkem\Skem\Controllers\Web',
+    'module' => 'skem',
+    'controller' => 'realisasiSkem',
+    'action' => 'validate',
+    'params' => 1
+));
+
 $router->add('/realisasi_skem/semester', array(
     'namespace' => 'SiaSkem\Skem\Controllers\Web',
     'module' => 'skem',

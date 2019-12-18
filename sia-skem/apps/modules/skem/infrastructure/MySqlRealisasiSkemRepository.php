@@ -34,6 +34,7 @@ class MySqlRealisasiSkemRepository implements RealisasiSkemRepository{
                 $skemId,
                 $row["deskripsi"],
                 $row["semester"],
+                ($row["tervalidasi"] == 1)?true:false,
                 $row["tanggal"]
 
             );
@@ -67,6 +68,7 @@ class MySqlRealisasiSkemRepository implements RealisasiSkemRepository{
             $skemId,
             $row["deskripsi"],
             $row["semester"],
+            ($row["tervalidasi"] == 1)?true:false,
             $row["tanggal"]
         );
         return $realisasi;
@@ -95,6 +97,7 @@ class MySqlRealisasiSkemRepository implements RealisasiSkemRepository{
                 $skemId,
                 $row["deskripsi"],
                 $row["semester"],
+                ($row["tervalidasi"] == 1)?true:false,
                 $row["tanggal"]
 
             );
@@ -114,6 +117,7 @@ class MySqlRealisasiSkemRepository implements RealisasiSkemRepository{
             "skem_id" => $realisasiSkem->skemId()->id(),
             "deskripsi" => $realisasiSkem->deskripsi(),
             "semester" => $realisasiSkem->semester(),
+            "tervalidasi" => $realisasiSkem->tervalidasi(),
             "tanggal" => $realisasiSkem->tanggal()
         ];
         $dataTypes = [
@@ -121,17 +125,18 @@ class MySqlRealisasiSkemRepository implements RealisasiSkemRepository{
             "skem_id" => Column::BIND_PARAM_STR,
             "deskripsi" => Column::BIND_PARAM_STR,
             "semester" => Column::BIND_PARAM_INT,
-            "tanggal" => Column::BIND_PARAM_STR
+            "tervalidasi" => Column::BIND_PARAM_INT,
+            "tanggal" => Column::BIND_PARAM_STR,
         ];
         $query = "";
         if(!$isExist){
             $query =
-                "INSERT INTO {$this->skemTableName}(id, skem_id, deskripsi, semester, tanggal)
-                VALUE (:id, :skem_id, :deskripsi, :semester, :tanggal)";  
+                "INSERT INTO {$this->skemTableName}(id, skem_id, deskripsi, semester, tervalidasi,tanggal)
+                VALUE (:id, :skem_id, :deskripsi, :semester, :tervalidasi, :tanggal)";  
         } else {
             $query =
                 "UPDATE {$this->skemTableName} SET
-                skem_id=:skem_id, deskripsi=:deskripsi, semester=:semester, tanggal=:tanggal
+                skem_id=:skem_id, deskripsi=:deskripsi, semester=:semester, tervalidasi=:tervalidasi, tanggal=:tanggal
                 WHERE id = :id";
         }
         $success = $this->db->execute($query, $placeholders, $dataTypes);

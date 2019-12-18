@@ -53,8 +53,31 @@ class RealisasiSkem
 
     public function validasiSkem()
     {
+        $errors = array();
+        
+        if ($this->checkIfCurrentDateAlreadyPassed()){
+            array_push($errors, "Tanggal sekarang lebih kecil dari pada tanggal realisasi");
+        }
+
+        if(empty($this->deskripsi)){
+            array_push($errors, "Deskripsi tidak boleh kosong");
+        }
+
+        if(empty($this->semester)){
+            array_push($errors, "Semester tidak boleh kosong");
+        }
+
+        if (!empty($errors)) {
+            throw new FailedValidation("Validation Failed", $errors);
+        }
         $this->tervalidasi = true;
     }
 
-
+    public function checkIfCurrentDateAlreadyPassed()
+    {
+        $skemDate = date_create_from_format("Y-m-d", $this->tanggal)->format("Y-m-d");
+        date_default_timezone_set('Asia/Jakarta');
+        $currentDate = date('Y-m-d', time());
+        return $currentDate < $skemDate;
+    }
 }

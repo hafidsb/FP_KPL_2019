@@ -3,6 +3,7 @@
 namespace SiaSkem\Skem\Controllers\Web;
 
 use Phalcon\Mvc\Controller;
+use SiaSkem\Skem\Application\FailedToValidateRealisasiSkem;
 use SiaSkem\Skem\Application\MembuatRealisasiSkemBaruRequest;
 use SiaSkem\Skem\Application\MembuatRealisasiSkemBaruService;
 use SiaSkem\Skem\Application\MelihatSemuaRealisasiSkemService;
@@ -10,8 +11,9 @@ use SiaSkem\Skem\Application\MenghapusRealisasiSkemService;
 use SiaSkem\Skem\Application\MelihatRealisasiSkemDenganIdService;
 use SiaSkem\Skem\Application\MengubahRealisasiSkemRequest;
 use SiaSkem\Skem\Application\MengubahRealisasiSkemService;
-use SiaSkem\Skem\Application\MelihatRealisasiSkemDenganSemesterService
-;
+use SiaSkem\Skem\Application\MelihatRealisasiSkemDenganSemesterService;
+use SiaSkem\Skem\Application\MemvalidasiRealisasiSkemRequest;
+use SiaSkem\Skem\Application\MemvalidasiRealisasiSkemService;
 
 class RealisasiSkemController extends Controller
 {
@@ -45,6 +47,11 @@ class RealisasiSkemController extends Controller
      */
     private $melihatRealisasiSkemDenganSemesterService;
 
+    /**
+     * @var MemvalidasiRealisasiSkemService $memvalidasiRealisasiSkem
+     */
+    private $memvalidasiRealisasiSkemService;
+
     public function onConstruct()
     {
         $skemRepository = $this->di->getShared('mysql_skem_repository');
@@ -74,6 +81,8 @@ class RealisasiSkemController extends Controller
             new MelihatRealisasiSkemDenganSemesterService(
                 $realisasiSkemRepository, $skemRepository
             );
+        
+        $this->memvalidasiRealisasiSkemService = new MemvalidasiRealisasiSkemService($realisasiSkemRepository);
     }
 
     public function indexAction()
@@ -120,6 +129,19 @@ class RealisasiSkemController extends Controller
         $this->menghapusRealisasiSkemService->execute($id);
         $this->flashSession->success("Realisasi Skem Berhasil Dihapus");
         $this->response->redirect('realisasi_skem');
+     }
+
+     public function validateAction($id)
+     {
+        $validasiRequest = new MemvalidasiRealisasiSkemRequest($id);
+        try {
+            $this->memvalidasiRealisasiSkemService->execute($validasiRequest);
+            $this->flashSession->success("Berhasil divalidasi");
+            
+        } catch (FailedToValidateRealisasiSkem $e) {
+            $this->flashSession->error($e->getMessage());
+        }
+        $this->response->redirect('realisasi_skem');   
      }
 
      public function editAction()
