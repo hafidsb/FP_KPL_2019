@@ -8,13 +8,15 @@ class RencanaSkem
     private $skemId;
     private $deskripsi;
     private $semester;
+    private $totalSkem;
 
-    public function __construct(RencanaSkemId $id, SkemId $skemId, $deskripsi, $semester)
+    public function __construct(RencanaSkemId $id, SkemId $skemId, $deskripsi, $semester, $count)
     {
         $this->id = $id;
         $this->skemId = $skemId;
         $this->deskripsi = $deskripsi;
         $this->semester = $semester;
+        $this->totalSkem = $count;
     }
 
     public function id()
@@ -37,12 +39,22 @@ class RencanaSkem
         return $this->semester;
     }
 
-    public function addRencanaSkem($skemId, $deskripsi, $semester)
+    public function totalSkem()
     {
-        $rencanaSkemId = new RencanaSkemId();
-        $skemId = new SkemId($skemId);
-        $rencanaSkem = new RencanaSkem($rencanaSkemId, $skemId, $deskripsi, $semester);
-        return $rencanaSkem;
+        return $this->totalSkem;
+    }
+
+    public function tambahSkem()
+    {
+        if($this->totalSkem >= 5) {
+            throw new RencanaSkemLimitException("Rencana Skem Melebihi Batas!!");
+        }
+        $this->totalSkem += 1;
+    }
+
+    public function kurangiSkem()
+    {
+        $this->totalSkem -= 1;
     }
 
     

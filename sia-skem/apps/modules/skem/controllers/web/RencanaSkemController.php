@@ -11,6 +11,7 @@ use SiaSkem\Skem\Application\MelihatSemuaRencanaSkemService;
 use SiaSkem\Skem\Application\MenghapusRencanaSkemRequest;
 use SiaSkem\Skem\Application\MenghapusRencanaSkemService;
 use SiaSkem\Skem\Application\MelihatSemuaSkemService;
+use SiaSkem\Skem\Application\FailedToAddRencanaSkemException;
 
 class RencanaSkemController extends Controller
 {
@@ -66,8 +67,14 @@ class RencanaSkemController extends Controller
                 $semester
             );
 
-            $this->membuatRencanaSkemService->execute($request);
-            $this->flashSession->success("Rencana Skem Berhasil Ditambahkan");
+            try 
+            {
+                $this->membuatRencanaSkemService->execute($request);
+                $this->flashSession->success("Rencana Skem berhasil dibuat!!"); 
+            } catch(FailedToAddRencanaSkemException $e) 
+            {
+                $this->flashSession->error($e->getMessage());
+            }
             $this->response->redirect('rencana_skem');
         }
         

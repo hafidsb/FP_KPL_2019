@@ -7,6 +7,7 @@ use SiaSkem\Skem\Domain\Model\RencanaSkemId;
 use SiaSkem\Skem\Domain\Model\SkemId;
 use SiaSkem\Skem\Domain\Model\SkemFactory;
 use SiaSkem\Skem\Domain\Model\RencanaSkemRepository;
+use SiaSkem\Skem\Domain\Model\RencanaSkemFactory;
 use Phalcon\Db\Column;
 
 class MySqlRencanaSkemRepository implements RencanaSkemRepository
@@ -35,7 +36,8 @@ class MySqlRencanaSkemRepository implements RencanaSkemRepository
                 new RencanaSkemId($row["id"]),
                 new SkemId($row["skem_id"]),
                 $row["deskripsi"],
-                $row["semester"]
+                $row["semester"],
+                $this->count()
             );
             array_push($rencanaSkems, $rencanaSkem);
         }
@@ -86,6 +88,49 @@ class MySqlRencanaSkemRepository implements RencanaSkemRepository
             throw new DatabaseExecutionFailedException("Something wrong with database connection or query");
         }
 
+
+    }
+
+    public function byId(string $id)
+    {
+        $query = $this->db->prepare(
+            "SELECT id,skem_id,deskripsi,semester FROM {$this->tableName}
+            WHERE id = :id"
+        );
+        $placeholders = [
+            "id" => $id
+        ];
+        $dataTypes = [
+            "id" => Column::BIND_PARAM_STR
+        ];
+        $result = $this->db->executePrepared($query, $placeholders, $dataTypes); 
+        $row = $result->fetch();
+        if ($row == false) {
+            return null;
+        }
+        $rencanaSkem = RencanaSkemFactory::create(
+            new RencanaSkemId($id),
+            new SkemId($row['skem_id']),
+            $row['deskripsi'],
+            $row['semester'],
+            $this->count()
+        );
+
+        return $rencanaSkem;
+
+    }
+
+    public function count(): int
+    {
+        $query = "SELECT COUNT(id) AS JumlahSkem FROM {$this->tableName}";
+        $result = $this->db->query($query);
+        $rows = $result->fetchAll();
+        $count = 0;
+        foreach($rows as $row)
+        {
+            $count = (int)$row["JumlahSkem"];
+        }
+        return $count;
 
     }
 

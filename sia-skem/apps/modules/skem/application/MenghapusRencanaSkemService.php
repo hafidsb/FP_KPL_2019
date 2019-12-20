@@ -3,6 +3,7 @@
 namespace SiaSkem\Skem\Application;
 
 use SiaSkem\Skem\Domain\Model\RencanaSkemRepository;
+use SiaSkem\Skem\Domain\Model\RencanaSkem;
 
 class MenghapusRencanaSkemService
 {
@@ -15,6 +16,8 @@ class MenghapusRencanaSkemService
 
     public function execute(MenghapusRencanaSkemRequest $request)
     {
+        $rencanaSkem = $this->rencanaSkemRepository->byId($request->rencanaSkemId);
+        $rencanaSkem->kurangiSkem();
         $this->rencanaSkemRepository->deleteById($request->rencanaSkemId);
     }
 }

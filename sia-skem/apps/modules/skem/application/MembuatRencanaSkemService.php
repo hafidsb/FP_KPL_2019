@@ -2,8 +2,10 @@
 
 namespace SiaSkem\Skem\Application;
 
-use SiaSkem\Skem\Domain\Model\RencanaSkem;
+use SiaSkem\Skem\Domain\Model\RencanaSkemFactory;
 use SiaSkem\Skem\Domain\Model\RencanaSkemRepository;
+use SiaSkem\Skem\Domain\Model\SkemId;
+use SiaSkem\Skem\Domain\Model\RencanaSkemLimitException;
 
 class MembuatRencanaSkemService
 {
@@ -16,12 +18,24 @@ class MembuatRencanaSkemService
 
     public function execute(MembuatRencanaSkemRequest $request)
     {
-        $rencanaSkem = RencanaSkem::addRencanaSkem(
-            $request->skemId,
-            $request->deskripsi,
-            $request->semester
-        );
-        $this->rencanaSkemRepository->save($rencanaSkem);
+        try 
+        {
+            $rencanaSkem = RencanaSkemFactory::create(
+                null,
+                new SkemId($request->skemId),
+                $request->deskripsi,
+                $request->semester,
+                $this->rencanaSkemRepository->count()
+            );
+            $rencanaSkem->tambahSkem();
+    
+            $this->rencanaSkemRepository->save($rencanaSkem);
+
+        }
+        catch (RencanaSkemLimitException $e) 
+        {
+            throw new FailedToAddRencanaSkemException($e->getMessage());
+        }
 
     }
 }
