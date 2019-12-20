@@ -15,6 +15,7 @@ use SiaSkem\Skem\Application\MelihatRealisasiSkemDenganSemesterService;
 use SiaSkem\Skem\Application\MemvalidasiRealisasiSkemRequest;
 use SiaSkem\Skem\Application\MemvalidasiRealisasiSkemService;
 use SiaSkem\Skem\Application\MelihatSemuaSkemService;
+use SiaSkem\Skem\Domain\Model\ListRealisasiSkemFactory;
 
 class RealisasiSkemController extends Controller
 {
@@ -63,7 +64,10 @@ class RealisasiSkemController extends Controller
         $skemRepository = $this->di->getShared('mysql_skem_repository');
         $realisasiSkemRepository = $this->di->getShared('mysql_realisasi_skem_repository');
          
-        $this->membuatRealisasiSkemBaruService = new MembuatRealisasiSkemBaruService($realisasiSkemRepository);
+        $this->membuatRealisasiSkemBaruService = 
+            new MembuatRealisasiSkemBaruService(
+                $realisasiSkemRepository, $skemRepository
+            );
         $this->melihatSemuaRealisasiSkemService = 
             new MelihatSemuaRealisasiSkemService(
                 $realisasiSkemRepository, $skemRepository
@@ -105,9 +109,15 @@ class RealisasiSkemController extends Controller
                 $semester,
                 $tanggal
             );
-
-            $this->membuatRealisasiSkemBaruService->execute($request);
-            $this->flashSession->success("Realisasi Skem Berhasil Ditambahkan");
+            
+            try {
+                $this->membuatRealisasiSkemBaruService->execute($request);
+                $this->flashSession->success("Realisasi Skem Berhasil Ditambahkan");
+                
+            } catch (FailedToValidateRealisasiSkem $e) {
+                $this->flashSession->error($e->getMessage());
+            }
+           
             $this->response->redirect('realisasi_skem');
          } 
         
