@@ -5,7 +5,9 @@ namespace SiaSkem\Skem\Application;
 use SiaSkem\Skem\Domain\Model\RealisasiSkemRepository;
 use SiaSkem\Skem\Domain\Model\RealisasiSkemFactory;
 use SiaSkem\Skem\Domain\Model\SkemRepository;
-use SiaSkem\Skem\Domain\Model\SkemFactory;
+use SiaSkem\Skem\Domain\Model\SkemId;
+use SiaSkem\Skem\Domain\Model\FailedValidation;
+use SiaSkem\Skem\Domain\Model\ListRealisasiSkemFactory;
 
 class MembuatRealisasiSkemBaruService
 {
@@ -22,24 +24,47 @@ class MembuatRealisasiSkemBaruService
 
     public function execute(MembuatRealisasiSkemBaruRequest $request)
     {
-        $skem = SkemFactory::create(
-            null,
-            $request->namaKegiatan,
-            $request->jenisKegiatan,
-            $request->lingkup,
-            $request->poin
-        );
-
+        $skemId = new SkemId($request->skemId);
         $realisasiSkem = RealisasiSkemFactory::create(
             null,
-            $skem->id(),
+            $skemId,
             $request->deskripsi,
             $request->semester,
+            false,
             $request->tanggal
         );
 
-        $this->skemRepository->save($skem);
-        $this->realisasiSkemRepository->save($realisasiSkem);
+        $realisasiSkems = $this->realisasiSkemRepository->all();
+        $response = new MelihatSemuaRealisasiSkemResponse();
+        
+        foreach($realisasiSkems as $realisasi){
+            $skem = $this->skemRepository->byId($realisasi->skemId()->id());
+            $response->addRealisasiSkem(
+                $realisasi->id()->id(),
+                $skem->kegiatan()->nama(),
+                $skem->kegiatan()->jenis(),
+                $skem->lingkup(),
+                $skem->poin(),
+                $realisasi->deskripsi(),
+                $realisasi->semester(),
+                $realisasi->tervalidasi(),
+                $realisasi->tanggal()
+            );
+        }
+
+        $listSkems = ListRealisasiSkemFactory::create($response, $request->semester);
+        try{
+            $listSkems->cekJumlahSkemMelebihiBatas();
+            $this->realisasiSkemRepository->save($realisasiSkem);
+        } catch (FailedValidation $e){
+            $errors = $e->getFailedRequierments();
+            $errorMessage = "";
+            foreach ($errors as $error){
+                $errorMessage .= $error . ', ';
+            }
+            throw new FailedToValidateRealisasiSkem($errorMessage);
+        }
+        
     }
 
 }
