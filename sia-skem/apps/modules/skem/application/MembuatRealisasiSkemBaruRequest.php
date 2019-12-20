@@ -4,20 +4,14 @@ namespace SiaSkem\Skem\Application;
 
 class MembuatRealisasiSkemBaruRequest
 {
-    public $namaKegiatan;
-    public $jenisKegiatan;
-    public $lingkup;
-    public $poin;
+    public $skemId;
     public $deskripsi;
     public $semester;
     public $tanggal;
 
-    public function __construct($namaKegiatan, $jenisKegiatan, $lingkup, $poin, $deskripsi, $semester, $tanggal)
+    public function __construct($skemId, $deskripsi, $semester, $tanggal)
     {
-        $this->namaKegiatan = $namaKegiatan;
-        $this->jenisKegiatan = $jenisKegiatan;
-        $this->lingkup = $lingkup;
-        $this->poin = $poin;
+        $this->skemId = $skemId;
         $this->deskripsi = $deskripsi;
         $this->semester = $semester;
         $this->tanggal = $tanggal;

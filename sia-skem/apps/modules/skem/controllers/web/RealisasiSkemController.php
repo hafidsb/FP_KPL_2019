@@ -14,6 +14,7 @@ use SiaSkem\Skem\Application\MengubahRealisasiSkemService;
 use SiaSkem\Skem\Application\MelihatRealisasiSkemDenganSemesterService;
 use SiaSkem\Skem\Application\MemvalidasiRealisasiSkemRequest;
 use SiaSkem\Skem\Application\MemvalidasiRealisasiSkemService;
+use SiaSkem\Skem\Application\MelihatSemuaSkemService;
 
 class RealisasiSkemController extends Controller
 {
@@ -52,37 +53,32 @@ class RealisasiSkemController extends Controller
      */
     private $memvalidasiRealisasiSkemService;
 
+    /**
+     * @var MelihatSemuaSkemService $melihatSemuaSkemService
+     */
+    private $melihatSemuaSkemService;
+
     public function onConstruct()
     {
         $skemRepository = $this->di->getShared('mysql_skem_repository');
         $realisasiSkemRepository = $this->di->getShared('mysql_realisasi_skem_repository');
          
-        $this->membuatRealisasiSkemBaruService = 
-            new MembuatRealisasiSkemBaruService(
-                $realisasiSkemRepository, $skemRepository
-            );
+        $this->membuatRealisasiSkemBaruService = new MembuatRealisasiSkemBaruService($realisasiSkemRepository);
         $this->melihatSemuaRealisasiSkemService = 
             new MelihatSemuaRealisasiSkemService(
                 $realisasiSkemRepository, $skemRepository
             );
-        $this->menghapusRealisasiSkemService = 
-            new MenghapusRealisasiSkemService(
-                $realisasiSkemRepository, $skemRepository
-            );
-        $this->melihatRealisasiSkemDenganIdService = 
-            new MelihatRealisasiSkemDenganIdService(
-                $realisasiSkemRepository, $skemRepository
-            );
-        $this->mengubahRealisasiSkemService = 
-            new MengubahRealisasiSkemService(
-                $realisasiSkemRepository, $skemRepository
-            );
+        $this->menghapusRealisasiSkemService =  new MenghapusRealisasiSkemService($realisasiSkemRepository);
+        $this->melihatRealisasiSkemDenganIdService = new MelihatRealisasiSkemDenganIdService( $realisasiSkemRepository);
+        $this->mengubahRealisasiSkemService = new MengubahRealisasiSkemService($realisasiSkemRepository );
         $this->melihatRealisasiSkemDenganSemesterService = 
             new MelihatRealisasiSkemDenganSemesterService(
                 $realisasiSkemRepository, $skemRepository
             );
         
         $this->memvalidasiRealisasiSkemService = new MemvalidasiRealisasiSkemService($realisasiSkemRepository);
+
+        $this->melihatSemuaSkemService = new MelihatSemuaSkemService($skemRepository);
     }
 
     public function indexAction()
@@ -98,19 +94,13 @@ class RealisasiSkemController extends Controller
      public function createAction()
      {
          if ($this->request->isPost()){
-            $namaKegiatan = $this->request->getPost('nama_kegiatan');
-            $jenisKegiatan = $this->request->getPost('jenis_kegiatan');
-            $lingkup = $this->request->getPost('lingkup');
-            $poin = $this->request->getPost('poin');
+            $skemId = $this->request->getPost('skemId');
             $deskripsi = $this->request->getPost('deskripsi');
             $semester = $this->request->getPost('semester');
             $tanggal = $this->request->getPost('tanggal');
 
             $request = new MembuatRealisasiSkemBaruRequest(
-                $namaKegiatan,
-                $jenisKegiatan,
-                $lingkup,
-                $poin,
+                $skemId,
                 $deskripsi,
                 $semester,
                 $tanggal
@@ -119,8 +109,14 @@ class RealisasiSkemController extends Controller
             $this->membuatRealisasiSkemBaruService->execute($request);
             $this->flashSession->success("Realisasi Skem Berhasil Ditambahkan");
             $this->response->redirect('realisasi_skem');
-         }
-         $this->view->pick('realisasi_skem/create');
+         } 
+        
+        $skemResponse = $this->melihatSemuaSkemService->execute();
+        $skems = $skemResponse->skems;
+        $this->view->setVars([
+            'skems' => $skems
+        ]);
+        $this->view->pick('realisasi_skem/create');
      }
 
      public function deleteAction()
@@ -149,19 +145,13 @@ class RealisasiSkemController extends Controller
         $id = $this->dispatcher->getParam("id");
 
         if ($this->request->isPost()){
-            $namaKegiatan = $this->request->getPost('nama_kegiatan');
-            $jenisKegiatan = $this->request->getPost('jenis_kegiatan');
-            $lingkup = $this->request->getPost('lingkup');
-            $poin = $this->request->getPost('poin');
+            $skemId = $this->request->getPost('skemId');
             $deskripsi = $this->request->getPost('deskripsi');
             $semester = $this->request->getPost('semester');
             $tanggal = $this->request->getPost('tanggal');
 
             $request = new MengubahRealisasiSkemRequest(
-                $namaKegiatan,
-                $jenisKegiatan,
-                $lingkup,
-                $poin,
+                $skemId,
                 $deskripsi,
                 $semester,
                 $tanggal
@@ -173,10 +163,15 @@ class RealisasiSkemController extends Controller
         }
         
         $realisasiResponse = $this->melihatRealisasiSkemDenganIdService->execute($id);
+        $realisasi = $realisasiResponse->realisasi;
+        $skemResponse = $this->melihatSemuaSkemService->execute();
+        $skems = $skemResponse->skems;
+        $dummy = (object) [1,2,3,4,5,6,7,8];
         $this->view->setVars([
-            'realisasi' => $realisasiResponse->realisasi
+            'realisasi' => $realisasi,
+            'skems' => $skems,
+            'semester' => $dummy
         ]);
-
         $this->view->pick('realisasi_skem/edit');
      }
 
