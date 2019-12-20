@@ -74,7 +74,10 @@ class RealisasiSkemController extends Controller
             );
         $this->menghapusRealisasiSkemService =  new MenghapusRealisasiSkemService($realisasiSkemRepository);
         $this->melihatRealisasiSkemDenganIdService = new MelihatRealisasiSkemDenganIdService( $realisasiSkemRepository);
-        $this->mengubahRealisasiSkemService = new MengubahRealisasiSkemService($realisasiSkemRepository );
+        $this->mengubahRealisasiSkemService = 
+            new MengubahRealisasiSkemService(
+                $realisasiSkemRepository, $skemRepository
+            );
         $this->melihatRealisasiSkemDenganSemesterService = 
             new MelihatRealisasiSkemDenganSemesterService(
                 $realisasiSkemRepository, $skemRepository
@@ -109,7 +112,7 @@ class RealisasiSkemController extends Controller
                 $semester,
                 $tanggal
             );
-            
+
             try {
                 $this->membuatRealisasiSkemBaruService->execute($request);
                 $this->flashSession->success("Realisasi Skem Berhasil Ditambahkan");
@@ -166,9 +169,14 @@ class RealisasiSkemController extends Controller
                 $semester,
                 $tanggal
             );
-
-            $this->mengubahRealisasiSkemService->execute($request, $id);
-            $this->flashSession->success("Realisasi Skem Berhasil Diubah");
+            try {
+                $this->mengubahRealisasiSkemService->execute($request, $id);
+                $this->flashSession->success("Realisasi Skem Berhasil Diubah");
+                
+            } catch (FailedToValidateRealisasiSkem $e) {
+                $this->flashSession->error($e->getMessage());
+            }
+            
             $this->response->redirect('realisasi_skem');
         }
         

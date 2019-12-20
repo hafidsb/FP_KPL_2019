@@ -20,20 +20,6 @@ class ListRealisasiSkem
         return $this->realisasiSkems;
     }
 
-    public function printSemesterAja()
-    {
-        $_arr = array();
-        foreach ($this->listRealisasiSkem() as $x) {
-            print($x->semester);
-            array_push($_arr, $x->semester);
-        }
-        print_r($_arr);
-        print_r(array_count_values($_arr));
-        $_hehe = array_count_values($_arr);
-        print_r(gettype(array_search($this->MAX_SKEM,$_hehe)));
-        print_r(array_search($this->MAX_SKEM,$_hehe));
-    }
-
     public function cekJumlahSkemMelebihiBatas()
     {
         $errors = array();
